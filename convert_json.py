@@ -91,7 +91,7 @@ class ANNOTATION:
         return self.__dict__
 
 
-def convert_to_bilou(jsonl_file, para_delimiter='\n\n\n', line_delimiter='\n', word_delimiter=' '):
+def convert_to_bilou(jsonl_file, mode, para_delimiter='\n\n\n', line_delimiter='\n', word_delimiter=' '):
     fl = open(jsonl_file, 'r', encoding='utf8')
     lines = fl.readlines()
 
@@ -148,9 +148,10 @@ def convert_to_bilou(jsonl_file, para_delimiter='\n\n\n', line_delimiter='\n', w
     out_path = jsonl_file.replace('\\', '/')
     out_file_path = out_path[:out_path.rindex('/')+1] if '/' in out_path else './'
 
-    with open(out_file_path+'annotation_iob.json', 'w') as f:
+    with open(out_file_path+f"{mode}_iob.json", 'w') as f:
         json.dump(annotations, f)
     
 if __name__ == '__main__':
     file_name = sys.argv[1]
-    convert_to_bilou(file_name)
+    mode = sys.argv[2]
+    convert_to_bilou(file_name, mode)
